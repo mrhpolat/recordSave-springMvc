@@ -8,4 +8,4 @@ DB Kurulum;
 Uygulamayi calistirmak icin;
 1-maven settings.xml'e recordsave id'li bir server eklenir.
 2-localhost:8080 haricinde kullanilacaksa, pom.xml'den url degistirilir.
-3-mvn tompcat7:deploye ile tomcat'e deploye edilir. 
+3-kodlarin cikartildigi klasorde, <b>mvn tompcat7:deploy</b> ile tomcat'e deploye edilir. 
