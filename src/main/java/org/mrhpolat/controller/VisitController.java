@@ -32,21 +32,21 @@ public class VisitController {
     //Redirect Pages
     @GetMapping(value = "/")
     public String homePage() {
-        logger.info("homePage is loading.");
+        logger.info("homePage controller is called.");
         return "home";
     }
 
     //Open the Visit Data Page
     @GetMapping(value = "/data")
     public String showData(Model model, @Nullable Visit visit) {
-        logger.info("showData is started.");
+        logger.info("showData controller is started.");
         if (visit != null)
             model.addAttribute("visit", visit);
         else
             model.addAttribute("visit", new Visit());
         model.addAttribute("cities", cityService.getCityDesc());
         model.addAttribute("bloods", visitService.getBloodList());
-        logger.info("showData is ended.");
+        logger.info("showData controller is ended.");
 
         return "form";
     }
@@ -54,17 +54,17 @@ public class VisitController {
     //Get All Visit Datas.
     @GetMapping(value = "/list")
     public String getVisits(Model model, final RedirectAttributes redirectAttributes) {
-        logger.info("Visit list is started.");
+        logger.info("Visit list controller is started.");
         List<Visit> listOfVisits = visitService.findAllVisit();
         model.addAttribute("visits", listOfVisits);
-        logger.info("Visit List is ended.");
+        logger.info("Visit List controller is ended.");
         return "list";
     }
 
     //Add a visit
     @PostMapping(value = "/ins")
     public String addVisit(@ModelAttribute("visit") Visit visit, final RedirectAttributes redirectAttributes) {
-        logger.info("Visit Insert is started.");
+        logger.info("Visit Insert controller is started.");
         redirectAttributes.addFlashAttribute("css", "success");
         if (visit.getId() == null) {
             redirectAttributes.addFlashAttribute("msg", "Visit added successfully!");
@@ -73,37 +73,37 @@ public class VisitController {
         }
 
         visitService.updateOrSaveVisit(visit);
-        logger.info("Visit Insert is ended.");
+        logger.info("Visit Insert controller is ended.");
         return "redirect:/visit/list";
     }
 
     //Get a visit and redirect to show page.
     @GetMapping(value = "/{id}")
     public String showVisit(@PathVariable("id") Long id, Model model) {
-        logger.info("Show by id is started.");
+        logger.info("Show by id controller is started.");
         Visit visit = visitService.getVisitById(id);
         if (visit == null) {
             model.addAttribute("css", "danger");
             model.addAttribute("msg", "User not found");
         }
         model.addAttribute("visit", visit);
-        logger.info("Show by id is ended.");
+        logger.info("Show by id controller is ended.");
         return "show";
     }
 
     @GetMapping(value = "/upd/{id}")
     public String updateVisit(@PathVariable("id") Long id, Model model) {
-        logger.info("Show by Id is updating.");
+        logger.info("Show by Id controller is updating.");
         return showData(model, visitService.getVisitById(id));
     }
 
     @GetMapping(value = "/del/{id}")
     public String deleteVisit(@PathVariable("id") Long id, Model model, final RedirectAttributes redirectAttributes) {
-        logger.info("delete by Id is started.");
+        logger.info("delete by Id controller is started.");
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Visit deleted successfully!");
          visitService.deleteVisit(id);
-        logger.info("delete by Id is ended.");
+        logger.info("delete by Id controller is ended.");
          return "redirect:/visit/list";
     }
 }
